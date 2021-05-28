@@ -1,6 +1,7 @@
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class Manager {
 
@@ -14,6 +15,7 @@ public class Manager {
     private ArrayList<Product> productsList = new ArrayList<>();
     private ArrayList<Product> removeProductList = new ArrayList<>();
     private ArrayList<Cat> catsList = new ArrayList<>();
+    private ArrayList<WorkShop> workShops = new ArrayList<>();
 
 
     public void eatGrass(){
@@ -99,6 +101,92 @@ public class Manager {
     public void buyAnimal(String name){
 
     }
+    public void buyWorkshop(String name){
+        for (WorkShop workShop : workShops) {
+            if (workShop.name.equals(name)){
+                System.out.println("You have bought this workshop before...");
+                return;
+            }
+        }
+        switch (name) {
+            case "bakery" -> {
+                Bakery bakery = new Bakery();
+                if (level.coins >= bakery.getCost()){
+                    workShops.add(bakery);
+                    level.coins -= bakery.getCost();
+                    System.out.println("Great! you bought a bakery." +
+                            "now you can create bread from flour.");
+                }
+                else
+                    System.out.println("Sorry! You don't have enough coins");
+            }
+            case "iceCreamSelling" -> {
+                IceCreamSelling iceCreamSelling = new IceCreamSelling();
+                if (level.coins >= iceCreamSelling.getCost()){
+                    workShops.add(iceCreamSelling);
+                    level.coins -= iceCreamSelling.getCost();
+                    System.out.println("Great! you bought an ice cream selling." +
+                            "now you can make ice cream with pocket milk.");
+                }
+                else
+                    System.out.println("Sorry! You don't have enough coins");            }
+            case "milkPackaging" -> {
+                MilkPackaging milkPackaging = new MilkPackaging();
+                if (level.coins >= milkPackaging.getCost()){
+                    workShops.add(milkPackaging);
+                    level.coins -= milkPackaging.getCost();
+                    System.out.println("Great! you bought a milk packaging workshop." +
+                            " now you can package milk.");
+                }
+                else
+                    System.out.println("Sorry! You don't have enough coins");            }
+            case "mill" -> {
+                Mill mill = new Mill();
+                if (level.coins >= mill.getCost()){
+                    workShops.add(mill);
+                    level.coins -= mill.getCost();
+                    System.out.println("Great! you bought a mill." +
+                            " now you can make flour with egg.");
+                }
+                else
+                    System.out.println("Sorry! You don't have enough coins");            }
+            case "sewing" -> {
+                SewingWS sewingWS = new SewingWS();
+                if (level.coins >= sewingWS.getCost()){
+                    workShops.add(sewingWS);
+                    level.coins -= sewingWS.getCost();
+                    System.out.println("Great! you bought a sewing workshop." +
+                            " now you can create shirt with cloth.");
+                }
+                else
+                    System.out.println("Sorry! You don't have enough coins");            }
+            case "weaving" -> {
+                WeavingWS weavingWS = new WeavingWS();
+                if (level.coins >= weavingWS.getCost()){
+                    workShops.add(weavingWS);
+                    level.coins -= weavingWS.getCost();
+                    System.out.println("Great! you bought a weaving workshop." +
+                            " now you can change feather to cloth.");
+                }
+                else
+                    System.out.println("Sorry! You don't have enough coins");            }
+        }
+    }
+    public void upgradeWorkshop(String name){
+        for (WorkShop workShop : workShops) {
+            if (workShop.name.equals(name)){
+                if (level.coins >= workShop.getUpgradeCost()){
+                    workShop.upgrading();
+                    level.coins -= workShop.getUpgradeCost();
+                    System.out.println("Perfect! "+workShop.name+" upgraded to level 2.");
+                    return;
+                }
+                System.out.println("Sorry! you don't have enough coin");
+                return;
+            }
+        }
+        System.out.println("ERROR! workshop not found!...");
+    }
     public void pickupProduct(int x, int y){
 
     }
@@ -109,7 +197,26 @@ public class Manager {
 
     }
     public void startingWorkshop(String name){
-
+        for (WorkShop workShop : workShops) {
+            if (workShop.name.equals(name)){
+                //if workshop's input product exist in the barn then
+                //workShop.setStartTime(Level.time);
+                System.out.println(workShop.name+" start working, your product will be ready by" +
+                        workShop.productionTime.n+" TIME.");
+                return;
+            }
+        }
+    }
+    public void checkWorkshops(){
+        for (WorkShop workShop : workShops) {
+            if (workShop.isProductReady(level.time)){
+                Product product = workShop.producing();
+                productsList.add(product);
+                workShop.setStartTime(new TIME(0));
+                System.out.println(workShop.name+" producing process finished." +
+                        " your product is ready.");
+            }
+        }
     }
     public void cage(int x, int y){
         for (WildAnimal wildAnimal : wildAnimalsList) {
