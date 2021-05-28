@@ -6,6 +6,7 @@ public class Mill extends WorkShop{
         this.productionTime = new TIME(4);
         this.input = new Product("egg",15,1,new TIME(4));
         this.output = new Product("flour",40,2,new TIME(5));
+        this.name = "mill";
     }
 
     @Override

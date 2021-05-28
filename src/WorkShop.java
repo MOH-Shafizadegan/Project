@@ -6,6 +6,15 @@ public abstract class WorkShop {
     protected TIME productionTime;
     protected int upgradeCost;
     protected TIME startTime;
+    protected String name;
+
+    public int getCost() {
+        return cost;
+    }
+
+    public int getUpgradeCost() {
+        return upgradeCost;
+    }
 
     public Product getInput() {
         return input;
@@ -15,14 +24,12 @@ public abstract class WorkShop {
         this.startTime = startTime;
     }
 
-    protected void upgrading(int cost){
-        if (cost >= upgradeCost){
-            if (productionTime.n % 2 == 0)
-                productionTime.n /= 2;
-            else
-                productionTime.n = (productionTime.n+1)/2;
-            this.level ++;
-        }
+    protected void upgrading(){
+        if (productionTime.n % 2 == 0)
+            productionTime.n /= 2;
+        else
+            productionTime.n = (productionTime.n+1)/2;
+        this.level ++;
     }
 
     abstract Product producing();
