@@ -20,6 +20,7 @@ public class InputProcessor {
     private void processStartTrip(){}
 
     public void run(){
+        System.out.println("Welcome to Farm Frenzy.");
         String input;
         boolean logout = false;
         while (!(input = scanner.nextLine()).equalsIgnoreCase("exit")){
