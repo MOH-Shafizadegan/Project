@@ -5,6 +5,10 @@ public class TIME {
         this.n = n;
     }
 
+    public TIME(TIME time){
+        this.n = time.n;
+    }
+
     public static void TURN(int n){
         // Level.TIME.n += n
     }
